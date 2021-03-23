@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<results version="2">
+    <cppcheck version="2.3" />
+    <errors>
+        <error id="syntaxError" severity="error" msg="Code &apos;classDBConnection{&apos; is invalid C code. Use --std or --language to configure the language." verbose="Code &apos;classDBConnection{&apos; is invalid C code. Use --std or --language to configure the language.">
+            <location file0="include\DBConnection.h" file="include\DBConnection.h" line="12" column="1" />
+        </error>
+        <error id="syntaxError" severity="error" msg="Code &apos;std::stringstream&apos; is invalid C code. Use --std or --language to configure the language." verbose="Code &apos;std::stringstream&apos; is invalid C code. Use --std or --language to configure the language.">
+            <location file0="include\Functor.h" file="include\Functor.h" line="7" column="5" />
+        </error>
+        <error id="syntaxError" severity="error" msg="Code &apos;classDBConnection{&apos; is invalid C code. Use --std or --language to configure the language." verbose="Code &apos;classDBConnection{&apos; is invalid C code. Use --std or --language to configure the language.">
+            <location file0="include\Library.h" file="include\DBConnection.h" line="12" column="1" />
+        </error>
+        <error id="syntaxError" severity="error" msg="Code &apos;classDBConnection{&apos; is invalid C code. Use --std or --language to configure the language." verbose="Code &apos;classDBConnection{&apos; is invalid C code. Use --std or --language to configure the language.">
+            <location file0="include\Registry.h" file="include\DBConnection.h" line="12" column="1" />
+        </error>
+        <error id="uninitMemberVar" severity="warning" msg="Member variable &apos;DBConnection::query_result&apos; is not initialized in the constructor." verbose="Member variable &apos;DBConnection::query_result&apos; is not initialized in the constructor." cwe="398" hash="466817286706814090">
+            <location file0="src\DBConnection.cpp" file="src\DBConnection.cpp" line="4" column="15" />
+            <symbol>DBConnection::query_result</symbol>
+        </error>
+        <error id="uninitMemberVar" severity="warning" msg="Member variable &apos;DBConnection::qstate&apos; is not initialized in the constructor." verbose="Member variable &apos;DBConnection::qstate&apos; is not initialized in the constructor." cwe="398" hash="6017498094565255870">
+            <location file0="src\DBConnection.cpp" file="src\DBConnection.cpp" line="4" column="15" />
+            <symbol>DBConnection::qstate</symbol>
+        </error>
+        <error id="uninitvar" severity="error" msg="Uninitialized variable: choice" verbose="Uninitialized variable: choice" cwe="457" hash="10863886723824769835">
+            <location file0="src\Library.cpp" file="src\Library.cpp" line="366" column="12" />
+            <symbol>choice</symbol>
+        </error>
+        <error id="unusedFunction" severity="style" msg="The function &apos;getNumOfRows&apos; is never used." verbose="The function &apos;getNumOfRows&apos; is never used." cwe="561">
+            <location file="src\DBConnection.cpp" line="65" column="0" />
+            <symbol>getNumOfRows</symbol>
+        </error>
+        <error id="unusedFunction" severity="style" msg="The function &apos;updateRecord&apos; is never used." verbose="The function &apos;updateRecord&apos; is never used." cwe="561">
+            <location file="src\DBConnection.cpp" line="90" column="0" />
+            <symbol>updateRecord</symbol>
+        </error>
+        <error id="missingIncludeSystem" severity="information" msg="Cppcheck cannot find all the include files (use --check-config for details)" verbose="Cppcheck cannot find all the include files. Cppcheck can check the code without the include files found. But the results will probably be more accurate if all the include files are found. Please check your project&apos;s include directories and add all of them as include directories for Cppcheck. To see what files Cppcheck cannot find use --check-config." />
+    </errors>
+</results>
