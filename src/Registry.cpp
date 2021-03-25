@@ -2,12 +2,9 @@
 //#include "Registry.h"
 //#include "sha256.h"
 
-Registry::Registry(DBConnection& dbc) : dbconnection(dbc) {
-    }
+Registry::Registry(DBConnection& dbc) : dbconnection(dbc) { }
 
-Registry::~Registry() {
-
-}
+Registry::~Registry() { }
 
 
 // for existing customer

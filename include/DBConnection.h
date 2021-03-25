@@ -33,9 +33,7 @@ public:
     bool sendQueryStoreResult(const char* query);
     bool fetchRowsWithLambda(const char* query, const std::function<void(MYSQL_ROW)> lambda); // ! const;
     bool updateRecord(const char* query);
-    unsigned long long getNumOfRows(const char* query);
     unsigned long long getNumOfColumns(const char* query);
-    bool removeRecord(const char* query);
     std::shared_ptr<std::string>  getOneField(const char* query);
     const std::shared_ptr<std::string>  validateStringInput(const char* name = "") const;
 };

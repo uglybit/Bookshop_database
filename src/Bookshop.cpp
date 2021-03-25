@@ -32,9 +32,9 @@ Bookshop::~Bookshop() {
 bool Bookshop::loginOrSignIn() {
     std::cout << "1. Log in\n";
     std::cout << "2. Sign in\n";
-    char choice;
-    checkInput(choice, '1', '2');
-    if (choice == '1') {
+    unsigned choice;
+    checkInput(choice, 1, 2);
+    if (choice == 1) {
        return  login();
     }
     return signIn();
@@ -123,25 +123,25 @@ void Bookshop::showAdminMenu() const {
 char Bookshop::adminMenuChoice() {
     showAdminMenu();
 
-    char choice{};
-    checkInput(choice, '0', '7');
+    unsigned choice{};
+    checkInput(choice, 0, 7);
     switch(choice)
     {
-        case '1': bookMenu();
+        case 1: bookMenu();
             break;
-        case '2': customerMenu();
+        case 2: customerMenu();
             break;
-        case '3': orderMenu();
+        case 3: orderMenu();
             break;
-        case '4': findInDatabase();
+        case 4: findInDatabase();
             break;
-        case '5': addToDatabase();
+        case 5: addToDatabase();
             break;
-        case '6': showBestSellingBooks();
+        case 6: showBestSellingBooks();
             break;
-        case '7': showIncomes();
+        case 7: showIncomes();
             break;
-        case '0': return '0';
+        case 0 : return '0';
     }
     return 'a';
 }
@@ -152,7 +152,6 @@ void Bookshop::showCustomerMenu() const {
     std::cout << "3. Order book \n";
     std::cout << "4. Show your books\n";
     std::cout << "5. Find book\n";
-    std::cout << "6. Find order\n";
     std::cout << "0. Logut\n";
     std::cout << *registry.getLogin(customerID) << ", ";
 }
@@ -161,26 +160,24 @@ char Bookshop::customerMenuChoice(){
     std::stringstream query;
     query << "SELECT * FROM ";
     showCustomerMenu();
-    char choice{};
-    checkInput(choice, '0', '6');
+    unsigned choice{};
+    checkInput(choice, 0, 5);
+    system("cls");
 
     switch(choice)
     {
-        case '1': showTable(books);
+        case 1: showTable(books);
             break;
-        case '2': showBestSellingBooks();
+        case 2: showBestSellingBooks();
             break;
-        case '3': orderBook();
+        case 3: orderBook();
             break;
-        case '4': showCustomerBooks();
+        case 4: showCustomerBooks();
             break;
-        case '5':  query << books->getName().c_str();
+        case 5:  query << books->getName().c_str();
                    findBook(query);
             break;
-        case '6': query << orders->getName().c_str();
-                  findOrder(query);
-            break;
-        case '0': return '0';
+        case 0: return '0';
     }
     return 'a';
 }
@@ -216,14 +213,15 @@ void Bookshop::customerMenu() {
     std::cout << "3. Remove customer\n";
     std::cout << "0. Main menu\n";
 
-    char choice{};
-    checkInput(choice, '0', '3');
+    unsigned choice{};
+    checkInput(choice, 0, 3);
+    system("cls");
     switch(choice)
     {
-        case '1': showCustomerBooks(); break;
-        case '2': editRecord(customers); break;
-        case '3': removeRecord(customers); break;
-        case '0': return;
+        case 1: showCustomerBooks(); break;
+        case 2: editRecord(customers); break;
+        case 3: removeRecord(customers); break;
+        case 0: return;
     }
  }
 
@@ -233,13 +231,14 @@ void Bookshop::bookMenu(){
     std::cout << "2. Remove book\n";
     std::cout << "0. Main menu\n";
 
-    char choice{};
-    checkInput(choice, '0', '2');
+    unsigned choice{};
+    checkInput(choice, 0, 2);
+    system("cls");
     switch(choice)
     {
-        case '1': editRecord(books); break; //editBook(); break;
-        case '2': removeRecord(books); break;
-        case '0': return;
+        case 1: editRecord(books); break; 
+        case 2: removeRecord(books); break;
+        case 0: return;
     }
  }
 
@@ -313,10 +312,11 @@ bool Bookshop::removeRecord(Table* table) {
     return false;
 }
 
-
+/*
 const std::string Bookshop::getColumnIdName(Table* table) const {
     return table->getColName(table->getIdPos());
 }
+*/
 
 unsigned Bookshop::getMaxId(Table* table) const {
     std::string columnIdAsText = table->getColName(table->getIdPos());
@@ -337,12 +337,12 @@ void Bookshop::orderMenu(){
     std::cout << "1. Change status\n";
     std::cout << "0. Main menu\n";
 
-    char choice{};
-    checkInput(choice, '0', '1');
+    unsigned choice{};
+    checkInput(choice, 0, 1);
     switch(choice)
     {
-        case '1': changeOrderStatus(); break;
-        case '0': return;
+        case 1: changeOrderStatus(); break;
+        case 0: return;
     }
 }
 
@@ -357,8 +357,8 @@ void Bookshop::changeOrderStatus() {
     std::cout << "2. Sent\n";
     std::cout << "0. Main menu\n";
 
-    char choice{};
-    checkInput(choice, '0', '2');
+    unsigned choice{};
+    checkInput(choice, 0, 2);
     std::stringstream query;
     query << "UPDATE orders SET status='";
     switch(choice)
@@ -436,23 +436,23 @@ void Bookshop::findInDatabase() const{
     std::stringstream query;
     query << "SELECT * FROM ";
 
-    char choice{};
-    checkInput(choice, '0', '3');
+    unsigned choice{};
+    checkInput(choice, 0, 3);
     if(choice == '0') return;
 
     std::cout << "Find by\n";
 
     switch(choice)
     {
-    case '1':
+    case 1:
         query << books->getName().c_str();
         findBook(query);
     break;
-    case '2':
+    case 2:
         query << customers->getName().c_str();
         findCustomer(query);
     break;
-    case '3':
+    case 3:
         query << orders->getName().c_str();
         findOrder(query);
     break;
@@ -525,18 +525,18 @@ void Bookshop::addToDatabase() const{
     std::stringstream query;
     query << "INSERT INTO ";
 
-    char choice{};
-    checkInput(choice, '0', '3');
+    unsigned choice{};
+    checkInput(choice, 0, 3);
 
     switch(choice)
     {
-    case '1': addToTable(books, query);
+    case 1: addToTable(books, query);
         break;
-    case '2':  addToTable(customers, query);
+    case 2:  addToTable(customers, query);
         break;
-    case '3':  addToTable(orders, query);
+    case 3:  addToTable(orders, query);
         break;
-    case '0': return;
+    case 0: return;
     }
 }
 
@@ -545,6 +545,7 @@ const TableType Bookshop::verifyTable(Table* table) const {
 }
 
 void Bookshop::showCustomerBooks() const {
+    system("cls");
     std::stringstream query;
     unsigned id{};
 

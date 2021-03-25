@@ -53,13 +53,6 @@ bool DBConnection::sendQueryStoreResult(const char* query) {
     return false;
 }
 
-unsigned long long DBConnection::getNumOfRows(const char* query) {
-    if (sendQueryStoreResult(query)) {
-        return mysql_num_rows(query_result);
-    }
-    return 0;
-}
-
 unsigned long long DBConnection::getNumOfColumns(const char* query) {
     if (sendQueryStoreResult(query)) {
         return mysql_num_fields(query_result);
@@ -78,28 +71,11 @@ bool DBConnection::fetchRowsWithLambda(const char* query, const std::function<vo
     return true;
 }
 
-bool DBConnection::updateRecord(const char* query) {
-    if (sendQuery(query)) {
-        std::cout << "Record changed\n";
-        return true;
-    }
-    return false;
-}
-
-bool DBConnection::removeRecord(const char* query) {
-    if (sendQuery(query)) {
-        std::cout << "Record removed\n";
-        return true;
-    }
-    return false;
-}
-
 std::shared_ptr<std::string> DBConnection::getOneField(const char* query) {
 
     auto result = std::make_shared<std::string>();
     auto lambda = [&result](MYSQL_ROW row) { *result = row[0]; };
 
     fetchRowsWithLambda(query, lambda);
-    std::cout << "getOneRFiedl: " << *result << '\n';
     return result;
 }

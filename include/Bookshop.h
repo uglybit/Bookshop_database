@@ -23,6 +23,8 @@ class Bookshop
 public:
     explicit Bookshop(DBConnection& dbc);
     ~Bookshop();
+    Bookshop(const Bookshop&) = delete;
+    Bookshop& operator=(const Bookshop&) = delete;
 
     char showMenu();
 
@@ -57,7 +59,6 @@ private:
     // internal functions
     void showTable(Table* table) const;
     const TableType verifyTable(Table* table) const;
-    void updateRecord();
     void showBestSellingBooks() const;
     void sendQueryShowResult(std::stringstream& query) const;
     const std::string* showColumnsTakeInput(Table* table) const;

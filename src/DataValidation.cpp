@@ -15,14 +15,16 @@ void checkInput(const std::string& str, const char* text) {
 
 }
 
-void checkInput(unsigned& number, int low, int high, const std::string& text) {
+void checkInput(unsigned& number, int first, int last, const std::string& text) {
     int input = -1;
-    
-    while (std::cin.fail() || input < low || input > high) {
+
+    while (std::cin.fail() || input < first || input > last) {
         std::cout << text;
-        std::cin.clear();
-        std::cin.ignore();
+        std::cout << "Choose between " << first << " and " << last << '\n';
         std::cin >> input;
+        std::cin.clear();
+        std::cin.ignore(100, '\n');
+        
     }
     number = input;
 }

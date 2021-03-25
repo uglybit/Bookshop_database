@@ -36,12 +36,12 @@
 	<iostream>
 	"Table.h"
 
-1616692299 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\src\bookshop.cpp
+1616695427 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\src\bookshop.cpp
 	"..\include\DBConnection.h"
 	"..\include\Bookshop.h"
 	"..\include\DataValidation.h"
 
-1616689200 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\src\registry.cpp
+1616693938 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\src\registry.cpp
 	"..\include\Registry.h"
 
 1616689189 c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\include\registry.h
@@ -51,7 +51,7 @@
 	"sha256.h"
 	<memory>
 
-1616663357 c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\include\dbconnection.h
+1616696148 c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\include\dbconnection.h
 	<iostream>
 	<Windows.h>
 	<mysql.h>
@@ -60,10 +60,10 @@
 	<functional>
 	<memory>
 
-1616689467 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\src\dbconnection.cpp
+1616696291 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\src\dbconnection.cpp
 	"..\include\DBConnection.h"
 
-1616688016 c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\include\bookshop.h
+1616696293 c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\include\bookshop.h
 	"DBConnection.h"
 	"Functor.h"
 	<sstream>
@@ -82,7 +82,7 @@
 1616446973 c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\include\datavalidation.h
 	<iostream>
 
-1616447852 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\src\datavalidation.cpp
+1616695196 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\src\datavalidation.cpp
 	"DataValidation.h"
 
 1616489728 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\src\user.cpp
@@ -91,12 +91,12 @@
 1616490638 c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\include\user.h
 	<iostream>
 
-1616690796 c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\include\table.h
+1616695680 c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\include\table.h
 	<iostream>
 	<vector>
 	<initializer_list>
 
-1616686082 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\src\table.cpp
+1616696589 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\src\table.cpp
 	"Table.h"
 	"..\include\Table.h"
 

@@ -1,10 +1,8 @@
 #include "Table.h"
 #include "..\include\Table.h"
 
-Table::Table(std::string name, std::initializer_list<const char*> columns) : name{name}, COLUMNS_SIZE{columns.size()} {
-    for ( auto a : columns) {
-        columnNames.push_back(a);
-    }
+Table::Table(const std::string& name, const std::initializer_list<const char*> columns) : name{name}, COLUMNS_SIZE{columns.size()} {
+    std::copy(columns.begin(), columns.end(), std::back_inserter(columnNames));
 }
 
 Table::~Table()

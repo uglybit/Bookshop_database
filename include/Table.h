@@ -19,7 +19,7 @@ class Table
     const unsigned COLUMN_ID_POS = 0;
     std::vector<std::string> columnNames;
 public:
-    Table(std::string name, std::initializer_list<const char*> columns);
+    Table(const std::string& name, const std::initializer_list<const char*> columns);
     virtual ~Table();
 
     const std::string& getName() const;
@@ -32,30 +32,30 @@ public:
 
 class Books : public Table {
 public:
-    Books(std::string name, std::initializer_list<const char*> columns) : Table(name, columns) {}
+    Books(const std::string& name, const std::initializer_list<const char*> columns) : Table(name, columns) {}
     ~Books() {}
-    const TableType type() { return TableType::books; }
+    const TableType type() override { return TableType::books; }
 };
 
 class Customers : public Table {
 public:
-    Customers(std::string name, std::initializer_list<const char*> columns) : Table(name, columns) {}
+    Customers(const std::string& name, const std::initializer_list<const char*> columns) : Table(name, columns) {}
     ~Customers() {}
-    const TableType type() { return TableType::customers; }
+    const TableType type() override { return TableType::customers; }
 };
 
 class Orders : public Table {
 public:
-    Orders(std::string name, std::initializer_list<const char*> columns) : Table(name, columns) {}
+    Orders(const std::string& name, const std::initializer_list<const char*> columns) : Table(name, columns) {}
     ~Orders() {}
-    const TableType type() { return TableType::orders; }
+    const TableType type() override { return TableType::orders; }
 };
 
 class Access : public Table {
 public:
-    Access(std::string name, std::initializer_list<const char*> columns) : Table(name, columns) {}
+    Access(const std::string& name, const std::initializer_list<const char*> columns) : Table(name, columns) {}
     ~Access() {}
-    const TableType type() { return TableType::access; }
+    const TableType type() override { return TableType::access; }
 };
 
 
