@@ -1,5 +1,5 @@
 # depslib dependency file v1.0
-1616525459 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\main.cpp
+1616663357 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\main.cpp
 	<iostream>
 	"..\include\DBConnection.h"
 	"..\include\Bookshop.h"
@@ -28,27 +28,28 @@
 	"DBConnection.h"
 	<sstream>
 
-1616518171 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\src\functor.cpp
+1616668201 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\src\functor.cpp
 	"Functor.h"
 
-1616136863 c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\include\functor.h
+1616668163 c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\include\functor.h
 	<sstream>
 	<iostream>
+	"Table.h"
 
-1616625434 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\src\bookshop.cpp
+1616678227 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\src\bookshop.cpp
 	"..\include\DBConnection.h"
 	"..\include\Bookshop.h"
 	"..\include\DataValidation.h"
 
-1616619437 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\src\registry.cpp
+1616663357 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\src\registry.cpp
 	"..\include\Registry.h"
 
-1616517469 c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\include\registry.h
+1616663357 c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\include\registry.h
 	"DBConnection.h"
 	<sstream>
 	"sha256.h"
 
-1616621185 c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\include\dbconnection.h
+1616663357 c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\include\dbconnection.h
 	<iostream>
 	<Windows.h>
 	<mysql.h>
@@ -57,16 +58,17 @@
 	<functional>
 	<memory>
 
-1616621211 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\src\dbconnection.cpp
+1616663357 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\src\dbconnection.cpp
 	"..\include\DBConnection.h"
 
-1616625486 c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\include\bookshop.h
+1616677678 c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\include\bookshop.h
 	"DBConnection.h"
 	"Functor.h"
 	<sstream>
 	<iomanip>
 	<memory>
 	"Registry.h"
+	"Table.h"
 
 1425066862 c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\include\sha256.h
 	<string>
@@ -86,4 +88,13 @@
 
 1616490638 c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\include\user.h
 	<iostream>
+
+1616666766 c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\include\table.h
+	<iostream>
+	<vector>
+	<initializer_list>
+
+1616663606 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\src\table.cpp
+	"Table.h"
+	"..\include\Table.h"
 

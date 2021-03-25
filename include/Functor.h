@@ -2,12 +2,13 @@
 #define FUNCTOR_H
 #include <sstream>
 #include <iostream>
+#include "Table.h"
 
 struct Functor {
     std::stringstream& query;
     explicit Functor(std::stringstream& q) : query(q) { }
 
-    void operator()(const unsigned& numOfColumns, const char* const columnsName[]);
+    void operator()(Table* table);
 };
 
 

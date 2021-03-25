@@ -1,16 +1,18 @@
 #include "Functor.h"
 
-void Functor::operator()(const unsigned& numOfColumns, const char* const columnsName[]) {
-    std::string userInput[numOfColumns];  
+void Functor::operator()(Table* table) {
+    unsigned numOfColumns = table->getColsSize();
+    std::string userInput[numOfColumns];
+
     for (int i = 1; i < numOfColumns; i++) { // skip column: id
-        query << columnsName[i];  // adding column name to query
+        query << table->getColName(i);  // adding column name to query
         if(i < numOfColumns -1 ) { // separate column names with comma
             query << ", ";
         }
-        std::cout << columnsName[i] << ": "; // show column name 
+        std::cout << table->getColName(i) << ": "; // show column name
         std::string input;
-        std::getline(std::cin, input); 
-        userInput[i] = input; // 
+        std::getline(std::cin, input);
+        userInput[i] = input; //
     }
     query << ") VALUES (";
 

@@ -6,6 +6,7 @@
 #include <iomanip>
 #include <memory>
 #include "Registry.h"
+#include "Table.h"
 
 class Bookshop
 {
@@ -15,19 +16,9 @@ class Bookshop
     bool admin{false};
     bool userLogged{false};
 
-    const unsigned COLUMN_ID = 0;
-    std::string table_books = "books";
-    static constexpr unsigned COLUMNS_BOOKS_SIZE{5};
-    const char* columnsBooks[COLUMNS_BOOKS_SIZE]{"Book_ID", "Author_name", "Author_surname", "Title", "Price"};
-
-    std::string table_customers = "customers";
-
-    static constexpr unsigned COLUMNS_CUSTOMERS_SIZE = 4;
-    const char* columnsCustomers[COLUMNS_CUSTOMERS_SIZE]{"Customer_ID", "Name", "Surname", "Email"};
-
-    std::string table_orders = "orders";
-    static constexpr unsigned COLUMNS_ORDERS_SIZE = 5;
-    const char* columnsOrders[COLUMNS_ORDERS_SIZE]{"Order_ID", "Customer_ID", "Book_ID", "Date", "Status"};
+    Table* books;
+    Table* customers;
+    Table* orders;
 
 public:
     explicit Bookshop(DBConnection& dbc);
@@ -60,21 +51,23 @@ private:
     void findBook(std::stringstream& query) const;
     void findOrder(std::stringstream& query) const;
     void showCustomerBooks() const;
-    void editCustomer();
     unsigned showCustomerById() const;
     void orderBook();
 
     // internal functions
-    void addToTable(const std::string& table, std::stringstream& query) const;
-    void showTable(const std::string& table) const;
-    const char verifyTable(const std::string& table) const;
+    void showTable(Table* table) const;
+    const TableType verifyTable(Table* table) const;
     void updateRecord();
     void showBestSellingBooks() const;
     void sendQueryShowResult(std::stringstream& query) const;
-    const auto showColumnsTakeInput(const char* tableName[], const unsigned& tableSize) const;
-    bool removeRecord(const std::string& table);
-    unsigned getMaxId(const std::string& table) const;
-    const std::string getColumnIdName(const std::string& table) const;
+    const std::string* showColumnsTakeInput(Table* table) const;
+    bool removeRecord(Table* table);
+    unsigned getMaxId(Table* table) const;
+    const std::string getColumnIdName(Table* table) const;
+    void addToTable(Table* table, std::stringstream& query) const;
+    void editRecord(Table* table);
+    unsigned showRecordById(Table * table) const;
+    void addColumsToQuery(Table* table, std::stringstream& query) const;
 
 };
 
