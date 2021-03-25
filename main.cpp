@@ -1,8 +1,8 @@
 #include <iostream>
 //#include "DBConnection.h"
-//#include "Library.h"
+//#include "Bookshop.h"
 #include "..\include\DBConnection.h"
-#include "..\include\Library.h"
+#include "..\include\Bookshop.h"
 
 
 int main()
@@ -10,11 +10,11 @@ int main()
     std::string host{"localhost"};
     std::string user{"root"};
     std::string passswd{""};
-    std::string dbname{"library"};
+    std::string dbname{"bookshop"};
 
     DBConnection dbconnection(host, user, passswd, dbname);
-    Library library(dbconnection);
-    while(library.showMenu() != '0') {
+    Bookshop bookshop(dbconnection);
+    while(bookshop.showMenu() != '0') {
     };
 
     return 0;

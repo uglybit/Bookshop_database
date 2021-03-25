@@ -9,29 +9,28 @@
             <location file0="include\Functor.h" file="include\Functor.h" line="7" column="5" />
         </error>
         <error id="syntaxError" severity="error" msg="Code &apos;classDBConnection{&apos; is invalid C code. Use --std or --language to configure the language." verbose="Code &apos;classDBConnection{&apos; is invalid C code. Use --std or --language to configure the language.">
-            <location file0="include\Library.h" file="include\DBConnection.h" line="12" column="1" />
+            <location file0="include\Bookshop.h" file="include\DBConnection.h" line="12" column="1" />
         </error>
         <error id="syntaxError" severity="error" msg="Code &apos;classDBConnection{&apos; is invalid C code. Use --std or --language to configure the language." verbose="Code &apos;classDBConnection{&apos; is invalid C code. Use --std or --language to configure the language.">
             <location file0="include\Registry.h" file="include\DBConnection.h" line="12" column="1" />
         </error>
-        <error id="uninitMemberVar" severity="warning" msg="Member variable &apos;DBConnection::query_result&apos; is not initialized in the constructor." verbose="Member variable &apos;DBConnection::query_result&apos; is not initialized in the constructor." cwe="398" hash="466817286706814090">
-            <location file0="src\DBConnection.cpp" file="src\DBConnection.cpp" line="4" column="15" />
-            <symbol>DBConnection::query_result</symbol>
+        <error id="syntaxError" severity="error" msg="Code &apos;classSHA256{&apos; is invalid C code. Use --std or --language to configure the language." verbose="Code &apos;classSHA256{&apos; is invalid C code. Use --std or --language to configure the language.">
+            <location file0="include\sha256.h" file="include\sha256.h" line="37" column="1" />
         </error>
-        <error id="uninitMemberVar" severity="warning" msg="Member variable &apos;DBConnection::qstate&apos; is not initialized in the constructor." verbose="Member variable &apos;DBConnection::qstate&apos; is not initialized in the constructor." cwe="398" hash="6017498094565255870">
-            <location file0="src\DBConnection.cpp" file="src\DBConnection.cpp" line="4" column="15" />
-            <symbol>DBConnection::qstate</symbol>
+        <error id="unusedVariable" severity="style" msg="Unused variable: query" verbose="Unused variable: query" cwe="563" hash="4001991508130190488">
+            <location file0="src\Bookshop.cpp" file="src\Bookshop.cpp" line="60" column="23" />
+            <symbol>query</symbol>
         </error>
-        <error id="uninitvar" severity="error" msg="Uninitialized variable: choice" verbose="Uninitialized variable: choice" cwe="457" hash="10863886723824769835">
-            <location file0="src\Library.cpp" file="src\Library.cpp" line="366" column="12" />
-            <symbol>choice</symbol>
+        <error id="uninitMemberVar" severity="warning" msg="Member variable &apos;SHA256::m_buffer&apos; is not initialized in the constructor." verbose="Member variable &apos;SHA256::m_buffer&apos; is not initialized in the constructor." cwe="398" hash="4321800216103553403">
+            <location file0="src\sha256.cpp" file="src\sha256.cpp" line="16" column="9" />
+            <symbol>SHA256::m_buffer</symbol>
         </error>
         <error id="unusedFunction" severity="style" msg="The function &apos;getNumOfRows&apos; is never used." verbose="The function &apos;getNumOfRows&apos; is never used." cwe="561">
-            <location file="src\DBConnection.cpp" line="65" column="0" />
+            <location file="src\DBConnection.cpp" line="63" column="0" />
             <symbol>getNumOfRows</symbol>
         </error>
         <error id="unusedFunction" severity="style" msg="The function &apos;updateRecord&apos; is never used." verbose="The function &apos;updateRecord&apos; is never used." cwe="561">
-            <location file="src\DBConnection.cpp" line="90" column="0" />
+            <location file="src\DBConnection.cpp" line="88" column="0" />
             <symbol>updateRecord</symbol>
         </error>
         <error id="missingIncludeSystem" severity="information" msg="Cppcheck cannot find all the include files (use --check-config for details)" verbose="Cppcheck cannot find all the include files. Cppcheck can check the code without the include files found. But the results will probably be more accurate if all the include files are found. Please check your project&apos;s include directories and add all of them as include directories for Cppcheck. To see what files Cppcheck cannot find use --check-config." />

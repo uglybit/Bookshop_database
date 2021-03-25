@@ -37,14 +37,14 @@
 		<Unit filename="include/DBConnection.h" />
 		<Unit filename="include/DataValidation.h" />
 		<Unit filename="include/Functor.h" />
-		<Unit filename="include/Library.h" />
+		<Unit filename="include/Bookshop.h" />
 		<Unit filename="include/Registry.h" />
 		<Unit filename="include/sha256.h" />
 		<Unit filename="main.cpp" />
 		<Unit filename="src/DBConnection.cpp" />
 		<Unit filename="src/DataValidation.cpp" />
 		<Unit filename="src/Functor.cpp" />
-		<Unit filename="src/Library.cpp" />
+		<Unit filename="src/Bookshop.cpp" />
 		<Unit filename="src/Registry.cpp" />
 		<Unit filename="src/sha256.cpp" />
 		<Extensions>

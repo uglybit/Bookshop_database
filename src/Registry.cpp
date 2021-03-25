@@ -5,7 +5,6 @@
 
 // for existing customer
 unsigned  Registry::checkLoginAndPassword(const std::string& login, const std::string& password) const {
-
     std::stringstream query;
     unsigned customerId{};
 
@@ -18,7 +17,7 @@ unsigned  Registry::checkLoginAndPassword(const std::string& login, const std::s
     };
 
     // check if login exist and take customer id
-    query << "SELECT regitstry.customer_id, regitstry.login FROM regitstry WHERE login='" << login << "'";
+    query << "SELECT registry.customer_id, registry.login FROM registry WHERE login='" << login << "'";
     if (!dbconnection.fetchRowsWithLambda(query.str().c_str(), lambda)) {
         return 0;
     }
@@ -29,52 +28,46 @@ unsigned  Registry::checkLoginAndPassword(const std::string& login, const std::s
     return customerId;
 }
 
-// for existing customer
 bool Registry::checkPassword(unsigned customerId, const std::string& password) const {
     SHA256 sha256;
     std::string passHash = sha256(password.c_str());
 
     std::stringstream query;
-    query << "SELECT password FROM regitstry WHERE customer_id=" << customerId;
-    auto validPassword = dbconnection.getOneField(query.str().c_str());
+    query << "SELECT password FROM registry WHERE customer_id=" << customerId;
+    auto validPassword = *dbconnection.getOneField(query.str().c_str());
     system("cls");
-    if (*validPassword == passHash) {
+    if (validPassword == passHash) {
         std::cout << "You are logged in!\n";
         std::cout << "Id klienta:" << customerId << '\n';
         return true;
     }
-    else {
-        std::cout << "Incorrect login or password\n";
-        return false;
-    }
+    std::cout << "Incorrect login or password\n";
+    return false;
 }
 
 std::shared_ptr<std::string> Registry::getLogin(unsigned id) const {
     std::stringstream query;
-    query << "SELECT login FROM regitstry WHERE customer_id=" << id;
+    query << "SELECT login FROM registry WHERE customer_id=" << id;
     auto customerLogin = dbconnection.getOneField(query.str().c_str());
     return customerLogin;
 }
 
-
-
-// for new customer
 bool Registry::validateLogin(const std::string& login) {
-
     if (login.size() < 5 || login.size() > 20) {
         std::cout << "Login must contain 5-20 characters\n";
         return false;
     }
+
     std::stringstream query;
-    query << "SELECT regitstry.customer_id FROM regitstry WHERE regitstry.login='" << login << "'";
+    query << "SELECT registry.customer_id FROM registry WHERE registry.login='" << login << "'";
     auto isLoginAvailable = dbconnection.getOneField(query.str().c_str());
+    
     if (isLoginAvailable->size() == 0) {
          return true;
     }
     return false;
 }
 
-// for new customer
 bool Registry::validatePassword(const std::string& password) {
     if (password.size() < 8 || password.size() > 25) {
         std::cout << "Password must contain 8-25 characters\n";
@@ -99,10 +92,10 @@ bool Registry::validatePassword(const std::string& password) {
     return true;
 }
 
-bool Registry::addNewUser(const unsigned& id, const std::string& login, const std::string& password, bool premium) {
+bool Registry::addNewUser(const unsigned& id, const std::string& login, const std::string& password) {
     std::stringstream query;
-    query << "INSERT INTO regitstry VALUES (" << id << ", '" << login << "', '" << password << "', " << premium << ")";
+    query << "INSERT INTO registry VALUES (" << id << ", '" << login << "', '" << password << "')";
 
-    return dbconnection.isQueryCorrect(query.str().c_str());
+    return dbconnection.sendQuery(query.str().c_str());
 }
 

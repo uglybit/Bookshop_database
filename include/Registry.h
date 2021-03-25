@@ -7,20 +7,23 @@
 class Registry
 {
     DBConnection& dbconnection;
-    std::string table_registry = "regitstry";
-    /*static constexpr*/ unsigned COLUMNS_REGISTRY = 4;
-    const char* columnsRegistry[5]{"Customer_ID", "Login", "Password", "Premium"};
+    std::string table_registry = "registry";
+    const unsigned COLUMNS_REGISTRY = 3;
+    const char* columnsRegistry[3]{"Customer_ID", "Login", "Password"};
 public:
     explicit Registry(DBConnection& dbc) : dbconnection(dbc) {}
     ~Registry() = default;
-
-    unsigned checkLoginAndPassword(const std::string& login, const std::string& password) const;
-    bool checkPassword(unsigned customerId, const std::string& password) const ;
-    bool validateLogin(const std::string& login);
-    bool validatePassword(const std::string& password);
-    bool addNewUser(const unsigned& id, const std::string& login, const std::string& password, bool premium);
+    
     std::shared_ptr<std::string> getLogin(unsigned id) const;
 
+    //for existing users
+    unsigned checkLoginAndPassword(const std::string& login, const std::string& password) const;
+    bool checkPassword(unsigned customerId, const std::string& password) const ;
+
+    //for new users
+    bool validateLogin(const std::string& login);
+    bool validatePassword(const std::string& password);
+    bool addNewUser(const unsigned& id, const std::string& login, const std::string& password);
 };
 
 #endif // REGISTRY_H

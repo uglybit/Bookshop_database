@@ -1,13 +1,17 @@
-//#include "Library.h"
+//#include "Bookshop.h"
 #include "..\include\DBConnection.h"
-#include "..\include\Library.h"
+#include "..\include\Bookshop.h"
 #include "..\include\DataValidation.h"
 
-Library::Library(DBConnection& dbc) : dbconnection(dbc), registry(dbc) {
+constexpr unsigned Bookshop::COLUMNS_BOOKS_SIZE;
+constexpr unsigned Bookshop::COLUMNS_CUSTOMERS_SIZE;
+constexpr unsigned Bookshop::COLUMNS_ORDERS_SIZE;
+
+Bookshop::Bookshop(DBConnection& dbc) : dbconnection(dbc), registry(dbc) {
     userLogged = loginOrSignIn();
 }
 
-bool Library::loginOrSignIn() {
+bool Bookshop::loginOrSignIn() {
     std::cout << "1. Log in\n";
     std::cout << "2. Sign in\n";
     char choice;
@@ -18,29 +22,25 @@ bool Library::loginOrSignIn() {
     return signIn();
 }
 
-
-bool Library::login() {
-
-    std::string login = "sebanek";
-    std::string password = "Qwerty!1";
+bool Bookshop::login() {
+    std::string login{"shopenhauer"}; //{"mithrandir"};
+    std::string password{"Qwerty!1"}; //{"Mnbvcx!1"};
     //login = *dbconnection.validateStringInput("Login");
     //password = *dbconnection.validateStringInput("Password");
-    //std::string login = "nowylogin";
-    //std::string password = "Nowehaslo!1";
 
     customerID = registry.checkLoginAndPassword(login, password);
     if (customerID == 0) {
         return false;
     }
     if (customerID == 1 || customerID == 2) {
-        admin = true; // maybe new table for admins, seems not safe
+        admin = true;
     }
     return true;
 }
 
-bool Library::signIn() {
-    std::string login = "sebanek3";
-    std::string password = "Nowehaslo!1";
+bool Bookshop::signIn() {
+    std::string login;
+    std::string password;
     std::cout << "Login: ";
     std::cin >> login;
     if (registry.validateLogin(login)) {
@@ -50,7 +50,6 @@ bool Library::signIn() {
             std::cout << "Password: ";
             std::cin >> password;
         }
-        //registry.signIn(login, password);
         std::stringstream query;
         query << "INSERT INTO ";
         addToTable(table_customers, query);
@@ -61,17 +60,14 @@ bool Library::signIn() {
     }
 }
 
-bool Library::saveNewUserToRegistry(const std::string& login, const std::string& password) {
-    std::stringstream query;
-    query << "SELECT Customer_ID FROM customers WHERE Customer_ID = (SELECT MAX(Customer_ID) FROM customers)";
-    auto id = dbconnection.getOneField(query.str().c_str());
-    customerID= stoi(*id);
+bool Bookshop::saveNewUserToRegistry(const std::string& login, const std::string& password) {
     SHA256 sha256;
     std::string hahsPass = sha256(password);
-    return registry.addNewUser(customerID, login, hahsPass, true);
+    customerID = getMaxId(table_customers);
+    return registry.addNewUser(customerID, login, hahsPass);
 }
 
-void Library::welcomeUser(unsigned id) const {
+void Bookshop::welcomeUser(unsigned id) const {
     std::cout << "Logged as: " << *registry.getLogin((id)) << ", ";
     if (admin) {
         std::cout << "Administrator\n\n";
@@ -81,22 +77,19 @@ void Library::welcomeUser(unsigned id) const {
     }
 }
 
-char Library::showMenu() {
+char Bookshop::showMenu() {
     while (!userLogged) {
         std::cout << "Log in or sign in!\n";
         userLogged = loginOrSignIn();
     }
     if (admin) {
-        return mainAdminMenuChoice();
+        return adminMenuChoice();
     }
-    else {
-        return mainUserMenuChoice();
-    }
+    return customerMenuChoice();
 }
 
-void Library::showAdminMenu() const {
-
-    std::cout << "\n\n1. Show books\n";
+void Bookshop::showAdminMenu() const {
+    std::cout << "\n\n1. Show all books\n";
     std::cout << "2. Show customers\n";
     std::cout << "3. Show orders\n";
     std::cout << "4. Find \n";
@@ -104,11 +97,10 @@ void Library::showAdminMenu() const {
     std::cout << "6. Bestsellers \n";
     std::cout << "7. Incomes \n";
     std::cout << "0. Logout\n";
-    welcomeUser(customerID);
+    std::cout << *registry.getLogin((customerID))<< ", " ;
 }
 
-void Library::showCustomerMenu() const {
-
+void Bookshop::showCustomerMenu() const {
     std::cout << "\n\n1. Show all books\n";
     std::cout << "2. Show bestsellers \n";
     std::cout << "3. Order book \n";
@@ -116,22 +108,23 @@ void Library::showCustomerMenu() const {
     std::cout << "5. Find book\n";
     std::cout << "6. Find order\n";
     std::cout << "0. Logut\n";
-    welcomeUser(customerID);
+    std::cout << *registry.getLogin((customerID)) << ", ";
 }
 
-char Library::mainUserMenuChoice(){
+char Bookshop::customerMenuChoice(){
     std::stringstream query;
     query << "SELECT * FROM ";
     showCustomerMenu();
     char choice{};
     checkInput(choice, '0', '6');
+
     switch(choice)
     {
         case '1': showTable(table_books);
             break;
         case '2': showBestSellingBooks();
             break;
-        case '3':
+        case '3': orderBook();
             break;
         case '4': showCustomerBooks();
             break;
@@ -143,12 +136,25 @@ char Library::mainUserMenuChoice(){
             break;
         case '0': return '0';
     }
-
     return 'a';
 }
 
+void Bookshop::orderBook() {
+    showTable(table_books);
+    std::cout << "Choose book id to order: ";
+    unsigned bookId;
+    unsigned maxId = getMaxId(table_books);
+    checkInput(bookId, 1, maxId);
 
-char Library::mainAdminMenuChoice() {
+    std::stringstream query;
+    query << "INSERT INTO " << table_orders << " VALUES (NULL, " << customerID << ", " << bookId << ", '2021-03-20', 'pending')";
+    if (dbconnection.sendQuery(query.str().c_str())) {
+        system("cls");
+        std::cout << "Order placed!\n";
+    }
+}
+
+char Bookshop::adminMenuChoice() {
     showAdminMenu();
     char choice{};
     checkInput(choice, '0', '7');
@@ -173,15 +179,15 @@ char Library::mainAdminMenuChoice() {
     return 'a';
 }
 
-void Library::showTable(const std::string& table) const {
+void Bookshop::showTable(const std::string& table) const {
     welcomeUser(customerID);
+
     std::stringstream query;
     query << "SELECT * FROM " << table.c_str();
-
     sendQueryShowResult(query);
 }
 
-void Library::customerMenu() {
+void Bookshop::customerMenu() {
     showTable(table_customers);
     std::cout << "1. Show customer's books\n";
     std::cout << "2. Edit customer's data\n";
@@ -199,7 +205,7 @@ void Library::customerMenu() {
     }
  }
 
-void Library::bookMenu(){
+void Bookshop::bookMenu(){
     showTable(table_books);
     std::cout << "1. Edit book\n";
     std::cout << "2. Remove book\n";
@@ -215,28 +221,45 @@ void Library::bookMenu(){
     }
  }
 
-bool Library::editBook() {
-    std::cout << "\n";
-    return true;
+bool Bookshop::editBook() {
+    std::cout << "Book id: ";
+    unsigned bookId{};
+    unsigned maxId = getMaxId(table_books);
+    checkInput(bookId, 1, maxId);
+    std::stringstream query;
+    query << "SELECT * FROM books WHERE book_id=" << bookId;
+    sendQueryShowResult(query);
+
+    std::cout << "Edit: \n";
+    for (int i = 1; i < COLUMNS_BOOKS_SIZE; i++) {
+        std::cout << i << ". " << columnsBooks[i] << '\n';
+    }
+    unsigned choice;
+    checkInput(choice, 1, 4);
+    std::cout << "New " << columnsBooks[choice] << ": ";
+
+    std::string field = *dbconnection.validateStringInput();
+    std::stringstream newQuery;
+    newQuery << "UPDATE books SET " << columnsBooks[choice] << "='" << field.c_str() << "'"
+             << " WHERE book_id=" << bookId;
+    if (dbconnection.sendQuery(newQuery.str().c_str())) {
+        return true;
+    }
+    return false;
 }
 
-bool Library::removeRecord(const std::string& table) {
+bool Bookshop::removeRecord(const std::string& table) {
     const char tableType = verifyTable(table);
-    std::string columnIdAsText;
-    switch(tableType)
-    {
-        case '1': columnIdAsText = columnsBooks[COLUMN_ID]; break;
-        case '2': columnIdAsText = columnsCustomers[COLUMN_ID]; break;
-        case '3': columnIdAsText = columnsOrders[COLUMN_ID]; break;
+    std::string columnIdAsText = getColumnIdName(table);
+
+    int maxIdfromTable = getMaxId(table);
+    if (maxIdfromTable == 0) {
+        return false;
     }
 
-    int maxIdformTable = getMaxId(table);
     std::cout << "Type id to remove: ";
     unsigned idToDelete{};
-
-    checkInput(idToDelete, 1, maxIdformTable, "Wrong id! Try again\n");
-
-
+    checkInput(idToDelete, 1, maxIdfromTable, "Wrong id! Try again\n");
     if (tableType == '2' && (idToDelete == 1 || idToDelete == 2)) {
         std::cout << "You can not remove Administrator account!\n";
         return false;
@@ -245,34 +268,40 @@ bool Library::removeRecord(const std::string& table) {
     std::stringstream query;
     query << "DELETE FROM " << table << " WHERE " << columnIdAsText << "=" << idToDelete;
 
-    if (dbconnection.isQueryCorrect(query.str().c_str())) {
+    if (dbconnection.sendQuery(query.str().c_str())) {
         std::cout << "Record id: " << idToDelete << " removed from table " << table << '\n';
         return true;
     }
-    else {
-        return false;
-    }
+    return false;
 }
 
-int Library::getMaxId(const std::string& table) const {
-
-    char tableType = verifyTable(table);
-    std::string columnIdAsText;  // powtorka!
+const std::string Bookshop::getColumnIdName(const std::string& table) const {
+    const char tableType = verifyTable(table);
+    std::string columnIdAsText;
     switch(tableType)
     {
         case '1': columnIdAsText = columnsBooks[COLUMN_ID]; break;
         case '2': columnIdAsText = columnsCustomers[COLUMN_ID]; break;
         case '3': columnIdAsText = columnsOrders[COLUMN_ID]; break;
-    } // powtorka
+    }
+    return columnIdAsText;
+}
 
+unsigned Bookshop::getMaxId(const std::string& table) const {
+    std::string columnIdAsText = getColumnIdName(table);
     std::stringstream query;
     query << "SELECT " << table << "." << columnIdAsText << " FROM " << table << " WHERE " << columnIdAsText
           << "=( SELECT MAX(" << columnIdAsText << ") FROM " << table << ")";
-    auto res = dbconnection.getOneField(query.str().c_str());
-    return stoi(*res);
+
+    auto result = dbconnection.getOneField(query.str().c_str());
+    if (result->size() == 0) {
+        std::cout << "No records at the table!\n";
+        return 0;
+    }
+    return stoi(*result);
 }
 
-void Library::orderMenu(){
+void Bookshop::orderMenu(){
     showTable(table_orders);
     std::cout << "1. Change status\n";
     std::cout << "0. Main menu\n";
@@ -286,12 +315,15 @@ void Library::orderMenu(){
     }
 }
 
-void Library::changeOrderStatus() {
+void Bookshop::changeOrderStatus() {
+    showTable(table_orders);
     unsigned orderId;
     std::cout << "Order ID: ";
-    std::cin >> orderId;
-    std::cout << "1. oczekiwanie\n";
-    std::cout << "2. wyslano\n";
+    unsigned maxId = getMaxId(table_orders);
+    checkInput(orderId, 1, maxId);
+
+    std::cout << "1. Pending\n";
+    std::cout << "2. Sent\n";
     std::cout << "0. Main menu\n";
 
     char choice{};
@@ -300,17 +332,18 @@ void Library::changeOrderStatus() {
     query << "UPDATE orders SET status='";
     switch(choice)
     {
-        case '1': query << "oczekiwanie"; break;
-        case '2': query << "wyslano"; break;
+        case '1': query << "pending"; break;
+        case '2': query << "sent"; break;
         case '0': return;
     }
     query << "' WHERE order_id=" << orderId;
-    if (dbconnection.isQueryCorrect(query.str().c_str())) {
+    std::cout << query.str() << '\n';
+    if (dbconnection.sendQuery(query.str().c_str())) {
         std::cout << "Status changed\n";
     }
 }
 
-const auto Library::showColumnsTakeInput(const char* tableName[], const unsigned& tableSize) const {
+const auto Bookshop::showColumnsTakeInput(const char* tableName[], const unsigned& tableSize) const {
     std::cin.clear();
     std::cin.ignore();
     auto tempTable = new std::string[tableSize];
@@ -324,35 +357,36 @@ const auto Library::showColumnsTakeInput(const char* tableName[], const unsigned
     return tempTable;
 }
 
-unsigned Library::showCustomerById() const {
-    unsigned customerID;
-    std::cout << "Type customer's ID";
-    std::cin >> customerID;
+unsigned Bookshop::showCustomerById() const {
+    unsigned id;
+    unsigned maxId = getMaxId(table_customers);
+    std::cout << "Type customer's ID: ";
+    checkInput(id, 1, maxId);
 
     std::stringstream query;
-    query << "SELECT name, surname, town FROM customers WHERE customer_id =" << customerID;
+    query << "SELECT name, surname, email FROM customers WHERE customer_id =" << id;
 
     sendQueryShowResult(query);
-    return customerID;
+    return id;
 }
 
-void Library::editCustomer() {
+void Bookshop::editCustomer() {
     std::cout << "Edit:\n";
     unsigned customerID = showCustomerById();
-    std::string* userInput = showColumnsTakeInput(columnsCustomers, COLUMNS_CUSTOMERS);
+    std::string* userInput = showColumnsTakeInput(columnsCustomers, COLUMNS_CUSTOMERS_SIZE);
 
-    std::stringstream newQuery;
-    newQuery << "UPDATE " << table_customers << " SET" <<
+    std::stringstream query;
+    query << "UPDATE " << table_customers << " SET" <<
                 " name='" << userInput[0] << "'," <<
                 " surname='" << userInput[1] << "'," <<
-                " town='" << userInput[2] << "'" <<
+                " email='" << userInput[2] << "'" <<
                 " WHERE customer_id=" << customerID;
 
     delete[] userInput;
-    dbconnection.isQueryCorrect(newQuery.str().c_str());
+    dbconnection.sendQuery(query.str().c_str());
 }
 
- void Library::sendQueryShowResult(std::stringstream& query) const {
+ void Bookshop::sendQueryShowResult(std::stringstream& query) const {
      //system("cls");
      unsigned long long numOfColumns = dbconnection.getNumOfColumns(query.str().c_str());
      auto lambda = [&](MYSQL_ROW row){
@@ -367,7 +401,7 @@ void Library::editCustomer() {
  }
 
 
-void Library::findInDatabase() const{
+void Bookshop::findInDatabase() const{
     system("cls");
     std::cout << "1. Find book\n";
     std::cout << "2. Find customer\n";
@@ -382,6 +416,7 @@ void Library::findInDatabase() const{
     if(choice == '0') return;
 
     std::cout << "Find by\n";
+
     switch(choice)
     {
     case '1':
@@ -397,60 +432,55 @@ void Library::findInDatabase() const{
         findOrder(query);
     break;
     }
-
-
 }
 
-void Library::findBook(std::stringstream& query) const {
-
-    query << " WHERE ";
+void Bookshop::findBook(std::stringstream& query) const {
     std::cout << "1. Id\n";
     std::cout << "2. Author\n";
     std::cout << "3. Title\n";
 
     char choice{};
     checkInput(choice, '1', '3');
-    std::string value;
-    std::cout << ": ";
-    std::cin >> value;
+    std::string value = *dbconnection.validateStringInput();
+
+    query << " WHERE ";
     switch(choice)
     {
     case '1': query << "Book_ID=" << value.c_str();
         break;
     case '2': query << "Author_surname='" << value.c_str() << "'";
         break;
-    case '3': query << "Title='%" << value.c_str() << "%'";
+    case '3': query << "Title LIKE '%" << value.c_str() << "%'";
         break;
     }
     sendQueryShowResult(query);
 }
 
-void Library::findCustomer(std::stringstream& query) const {
-    query << " WHERE ";
+void Bookshop::findCustomer(std::stringstream& query) const {
+
     std::cout << "1. Id\n";
     std::cout << "2. Surname\n";
-    std::cout << "3. Town\n";
+    std::cout << "3. Email\n";
 
     char choice{};
     checkInput(choice, '1', '3');
-    std::string value;
     std::cout << ": ";
-    std::cin >> value;
+    std::string value = *dbconnection.validateStringInput();
 
+    query << " WHERE ";
     switch(choice)
     {
-    case '1': query << "Customer_ID=" << value.c_str();
+    case '1': query << "customer_ID=" << value.c_str();
         break;
-    case '2': query << "Surname LIKE '%" << value.c_str() << "%'";
+    case '2': query << "surname LIKE '%" << value.c_str() << "%'";
         break;
-    case '3': query << "Town LIKE '%" << value.c_str() << "%'";
+    case '3': query << "email='" << value.c_str() << "'";
         break;
     }
     sendQueryShowResult(query);
 }
 
-void Library::findOrder(std::stringstream& query) const {
-    query << " WHERE ";
+void Bookshop::findOrder(std::stringstream& query) const {
     char choice{};
 
     std::cout << "1. Order Id\n";
@@ -464,10 +494,10 @@ void Library::findOrder(std::stringstream& query) const {
     else {
         choice = '1';
     }
-    std::string value;
     std::cout << ": ";
-    std::cin >> value;
+    std::string value = *dbconnection.validateStringInput();
 
+    query << " WHERE ";
     switch(choice)
     {
     case '1': query << "Order_ID=" << value.c_str();
@@ -484,7 +514,7 @@ void Library::findOrder(std::stringstream& query) const {
     sendQueryShowResult(query);
 }
 
-void Library::addToDatabase() const{
+void Bookshop::addToDatabase() const{
     std::cout << "1. Add book\n";
     std::cout << "2. Add customer\n";
     std::cout << "3. Add order\n";
@@ -508,48 +538,54 @@ void Library::addToDatabase() const{
     }
 }
 
-const char Library::verifyTable(const std::string& table) const {
+const char Bookshop::verifyTable(const std::string& table) const {
     if (table == table_books) return '1';
     else if (table == table_customers) return '2';
     else return '3';
 }
 
-void Library::addToTable(const std::string& table, std::stringstream& query) const {
+void Bookshop::addToTable(const std::string& table, std::stringstream& query) const {
+    const char tableType = verifyTable(table);
 
-    const char option = verifyTable(table);
+    query << table.c_str() << " (";
 
-    query << table.c_str() << " ("; //zapis nazwy tablicy
-
-    Functor takeInputFinishQuery(query);
+    Functor showFieldsFillRecord(query);
 
     std::cin.ignore(10, '\n');
-    switch(option)
+    switch(tableType)
     {
-    case '1': takeInputFinishQuery(COLUMNS_BOOKS, columnsBooks);
+    case '1': showFieldsFillRecord(COLUMNS_BOOKS_SIZE, columnsBooks);
         break;
-    case '2': takeInputFinishQuery(COLUMNS_CUSTOMERS, columnsCustomers);
+    case '2': showFieldsFillRecord(COLUMNS_CUSTOMERS_SIZE, columnsCustomers);
         break;
-    case '3': takeInputFinishQuery(COLUMNS_ORDERS, columnsOrders);
+    case '3': showFieldsFillRecord(COLUMNS_ORDERS_SIZE, columnsOrders);
         break;
     }
 
-    if (dbconnection.isQueryCorrect(query.str().c_str())) {
+    if (dbconnection.sendQuery(query.str().c_str())) {
+        system("cls");
         std::cout << "Record saved\n";
     }
 }
 
-void Library::showCustomerBooks() const {
+void Bookshop::showCustomerBooks() const {
     std::stringstream query;
+    unsigned id{};
 
     if (admin) {
-        unsigned customerID;
+
+        unsigned maxId = getMaxId(table_customers);
         std::cout << "\n1. Type customer's ID\n";
-        std::cin >> customerID;
+        checkInput(id, 1, maxId);
+    }
+    else {
+        std::cout << "Your books:\n\n";
+        id = customerID;
     }
 
-    query << "SELECT customers.Name, customers.Surname, books.Title, orders.Status"
+    query << "SELECT books.author_name, books.author_surname, books.Title, orders.Status"
              " FROM customers, orders, books "
-             " WHERE customers.Customer_ID=" << customerID <<
+             " WHERE customers.Customer_ID=" << id <<
              " && customers.Customer_ID=orders.Customer_ID"
              " && books.Book_ID=orders.Book_ID"
              " ORDER BY orders.Date";
@@ -557,7 +593,7 @@ void Library::showCustomerBooks() const {
     sendQueryShowResult(query);
 }
 
-void Library::showBestSellingBooks() const {
+void Bookshop::showBestSellingBooks() const {
     std::stringstream query;
     query << "SELECT books.Title,"
              " COUNT(orders.Book_ID) AS Sold"
@@ -570,7 +606,7 @@ void Library::showBestSellingBooks() const {
     sendQueryShowResult(query);
 }
 
-void Library::showIncomes() const {
+void Bookshop::showIncomes() const {
     std::stringstream query;
     query << "SELECT ROUND(SUM(books.Price),2) AS Incomes"
              " FROM books, orders"

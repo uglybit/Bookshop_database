@@ -18,10 +18,15 @@ DBConnection::DBConnection(const std::string& host, const std::string& user,
     }
 }
 
+DBConnection::~DBConnection() {
+    mysql_close(connection);
+}
+
 const std::shared_ptr<std::string> DBConnection::validateStringInput(const char* name) const{
     std::cout << name << ": ";
     auto userInput = std::make_shared<std::string>();
     std::cin >> *userInput;
+
     if (userInput->find_first_of("'\";") != std::string::npos) {
         std::cout << "You have inserted forbidden characters";
         validateStringInput(name);
@@ -29,11 +34,7 @@ const std::shared_ptr<std::string> DBConnection::validateStringInput(const char*
     return userInput;
 }
 
-DBConnection::~DBConnection() {
-    mysql_close(connection);
-}
-
-bool DBConnection::isQueryCorrect(const char* query) {
+bool DBConnection::sendQuery(const char* query) {
     qstate = mysql_query(connection, query);
     if (qstate == 0) {
         return true;
@@ -42,40 +43,32 @@ bool DBConnection::isQueryCorrect(const char* query) {
     return false;
 }
 
-bool DBConnection::isResultCorrect(const char* query) {
+bool DBConnection::sendQueryStoreResult(const char* query) {
+    sendQuery(query);
     query_result = mysql_store_result(connection);
     if (query_result) {
         return true;
     }
-    std::cout << "Problems with query_result!\n";
-    return false;
-}
-
-bool DBConnection::storeQeuryResult(const char* query) {
-    if (isQueryCorrect(query)) {
-        if (isResultCorrect(query)) {
-            return true;
-        }
-    }
+    std::cout << "Problems with database!\n";
     return false;
 }
 
 unsigned long long DBConnection::getNumOfRows(const char* query) {
-    if (storeQeuryResult(query)) {
+    if (sendQueryStoreResult(query)) {
         return mysql_num_rows(query_result);
     }
     return 0;
 }
 
 unsigned long long DBConnection::getNumOfColumns(const char* query) {
-    if (storeQeuryResult(query)) {
+    if (sendQueryStoreResult(query)) {
         return mysql_num_fields(query_result);
     }
     return 0;
 }
 
 bool DBConnection::fetchRowsWithLambda(const char* query, const std::function<void(MYSQL_ROW)> lambda) {
-    if (!storeQeuryResult(query)) {
+    if (!sendQueryStoreResult(query)) {
         return false;
     }
     while((row = mysql_fetch_row(query_result))) {
@@ -86,7 +79,7 @@ bool DBConnection::fetchRowsWithLambda(const char* query, const std::function<vo
 }
 
 bool DBConnection::updateRecord(const char* query) {
-    if (isQueryCorrect(query)) {
+    if (sendQuery(query)) {
         std::cout << "Record changed\n";
         return true;
     }
@@ -94,14 +87,14 @@ bool DBConnection::updateRecord(const char* query) {
 }
 
 bool DBConnection::removeRecord(const char* query) {
-    if (isQueryCorrect(query)) {
+    if (sendQuery(query)) {
         std::cout << "Record removed\n";
         return true;
     }
     return false;
 }
 
-std::shared_ptr<std::string> DBConnection::getOneField(const char* query/*,  std::string& result*/) {
+std::shared_ptr<std::string> DBConnection::getOneField(const char* query) {
 
     auto result = std::make_shared<std::string>();
     auto lambda = [&result](MYSQL_ROW row) { *result = row[0]; };
