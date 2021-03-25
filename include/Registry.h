@@ -1,19 +1,20 @@
 #ifndef REGISTRY_H
 #define REGISTRY_H
 #include "DBConnection.h"
+#include "Table.h"
 #include <sstream>
 #include "sha256.h"
+#include <memory>
 
 class Registry
 {
     DBConnection& dbconnection;
-    std::string table_registry = "registry";
-    const unsigned COLUMNS_REGISTRY = 3;
-    const char* columnsRegistry[3]{"Customer_ID", "Login", "Password"};
+    Access access{"access", {"Customer_ID", "Login", "Password"}};
+
 public:
-    explicit Registry(DBConnection& dbc) : dbconnection(dbc) {}
-    ~Registry() = default;
-    
+    explicit Registry(DBConnection& dbc);
+    ~Registry();
+
     std::shared_ptr<std::string> getLogin(unsigned id) const;
 
     //for existing users

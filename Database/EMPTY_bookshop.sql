@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Czas generowania: 23 Mar 2021, 20:05
+-- Czas generowania: 25 Mar 2021, 18:10
 -- Wersja serwera: 10.4.17-MariaDB
 -- Wersja PHP: 8.0.0
 
@@ -20,6 +20,18 @@ SET time_zone = "+00:00";
 --
 -- Baza danych: `bookshop`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Struktura tabeli dla tabeli `access`
+--
+
+CREATE TABLE `access` (
+  `Customer_ID` int(11) NOT NULL,
+  `Login` text NOT NULL,
+  `Password` text NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -60,18 +72,6 @@ CREATE TABLE `orders` (
   `Book_ID` int(11) NOT NULL,
   `Date` date NOT NULL,
   `Status` text NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
--- Struktura tabeli dla tabeli `registry`
---
-
-CREATE TABLE `registry` (
-  `Customer_ID` int(11) NOT NULL,
-  `Login` text NOT NULL,
-  `Password` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --

@@ -5,10 +5,28 @@
 
 
 Bookshop::Bookshop(DBConnection& dbc) : dbconnection(dbc), registry(dbc) {
-    userLogged = loginOrSignIn();
+
     books = new Books{"books", {"Book_ID", "Author_name", "Author_surname", "Title", "Price"}};
     customers = new Customers{"customers", {"Customer_ID", "Name", "Surname", "Email"}};
     orders = new Orders{"orders", {"Order_ID", "Customer_ID", "Book_ID", "Date", "Status"}};
+    userLogged = loginOrSignIn();
+
+}
+
+Bookshop::~Bookshop() {
+   if (books) {
+        delete books;
+        books = nullptr;
+    }
+    if (customers) {
+        delete customers;
+        customers = nullptr;
+    }
+    if (orders) {
+        delete orders;
+        orders = nullptr;
+    }
+
 }
 
 bool Bookshop::loginOrSignIn() {
@@ -23,8 +41,8 @@ bool Bookshop::loginOrSignIn() {
 }
 
 bool Bookshop::login() {
-    std::string login{"shopenhauer"}; //{"mithrandir"};
-    std::string password{"Qwerty!1"}; //{"Mnbvcx!1"};
+    std::string login /*{"schopenhauer"}; {"mithrandir"};*/ {"ibish"};
+    std::string password /*{"Qwerty!1"}; {"Mnbvcx!1"}; */ {"Zxcvbn!1"};
     //login = *dbconnection.validateStringInput("Login");
     //password = *dbconnection.validateStringInput("Password");
 
@@ -50,6 +68,7 @@ bool Bookshop::signIn() {
             std::cout << "Password: ";
             std::cin >> password;
         }
+        std::cout << password << '\n';
         std::stringstream query;
         query << "INSERT INTO ";
         addToTable(customers, query);
@@ -226,6 +245,8 @@ void Bookshop::bookMenu(){
 
  void Bookshop::addToTable(Table* table, std::stringstream& query) const {
 
+    auto res = table->getName().c_str();
+    std::cout << res << '\n';
     query << table->getName().c_str() << " (";
 
     Functor showFieldsFillRecord(query);

@@ -2,6 +2,13 @@
 //#include "Registry.h"
 //#include "sha256.h"
 
+Registry::Registry(DBConnection& dbc) : dbconnection(dbc) {
+    }
+
+Registry::~Registry() {
+
+}
+
 
 // for existing customer
 unsigned  Registry::checkLoginAndPassword(const std::string& login, const std::string& password) const {
@@ -17,7 +24,7 @@ unsigned  Registry::checkLoginAndPassword(const std::string& login, const std::s
     };
 
     // check if login exist and take customer id
-    query << "SELECT registry.customer_id, registry.login FROM registry WHERE login='" << login << "'";
+    query << "SELECT access.customer_id, access.login FROM access WHERE login='" << login << "'";
     if (!dbconnection.fetchRowsWithLambda(query.str().c_str(), lambda)) {
         return 0;
     }
@@ -33,7 +40,7 @@ bool Registry::checkPassword(unsigned customerId, const std::string& password) c
     std::string passHash = sha256(password.c_str());
 
     std::stringstream query;
-    query << "SELECT password FROM registry WHERE customer_id=" << customerId;
+    query << "SELECT password FROM access WHERE customer_id=" << customerId;
     auto validPassword = *dbconnection.getOneField(query.str().c_str());
     system("cls");
     if (validPassword == passHash) {
@@ -47,7 +54,7 @@ bool Registry::checkPassword(unsigned customerId, const std::string& password) c
 
 std::shared_ptr<std::string> Registry::getLogin(unsigned id) const {
     std::stringstream query;
-    query << "SELECT login FROM registry WHERE customer_id=" << id;
+    query << "SELECT login FROM access WHERE customer_id=" << id;
     auto customerLogin = dbconnection.getOneField(query.str().c_str());
     return customerLogin;
 }
@@ -59,9 +66,9 @@ bool Registry::validateLogin(const std::string& login) {
     }
 
     std::stringstream query;
-    query << "SELECT registry.customer_id FROM registry WHERE registry.login='" << login << "'";
+    query << "SELECT access.customer_id FROM access WHERE access.login='" << login << "'";
     auto isLoginAvailable = dbconnection.getOneField(query.str().c_str());
-    
+
     if (isLoginAvailable->size() == 0) {
          return true;
     }
@@ -94,7 +101,7 @@ bool Registry::validatePassword(const std::string& password) {
 
 bool Registry::addNewUser(const unsigned& id, const std::string& login, const std::string& password) {
     std::stringstream query;
-    query << "INSERT INTO registry VALUES (" << id << ", '" << login << "', '" << password << "')";
+    query << "INSERT INTO access VALUES (" << id << ", '" << login << "', '" << password << "')";
 
     return dbconnection.sendQuery(query.str().c_str());
 }

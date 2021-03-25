@@ -8,7 +8,8 @@
 enum class TableType {
     books,
     customers,
-    orders
+    orders,
+    access
 };
 
 
@@ -19,7 +20,6 @@ class Table
     std::vector<std::string> columnNames;
 public:
     Table(std::string name, std::initializer_list<const char*> columns);
-    Table() : COLUMNS_SIZE{3}{}
     virtual ~Table();
 
     const std::string& getName() const;
@@ -28,6 +28,7 @@ public:
     const std::string getColName(unsigned number) const;
     virtual const TableType type() = 0;
 };
+
 
 class Books : public Table {
 public:
@@ -48,6 +49,13 @@ public:
     Orders(std::string name, std::initializer_list<const char*> columns) : Table(name, columns) {}
     ~Orders() {}
     const TableType type() { return TableType::orders; }
+};
+
+class Access : public Table {
+public:
+    Access(std::string name, std::initializer_list<const char*> columns) : Table(name, columns) {}
+    ~Access() {}
+    const TableType type() { return TableType::access; }
 };
 
 

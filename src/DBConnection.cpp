@@ -100,5 +100,6 @@ std::shared_ptr<std::string> DBConnection::getOneField(const char* query) {
     auto lambda = [&result](MYSQL_ROW row) { *result = row[0]; };
 
     fetchRowsWithLambda(query, lambda);
+    std::cout << "getOneRFiedl: " << *result << '\n';
     return result;
 }

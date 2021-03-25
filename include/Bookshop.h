@@ -22,7 +22,7 @@ class Bookshop
 
 public:
     explicit Bookshop(DBConnection& dbc);
-    ~Bookshop() = default;
+    ~Bookshop();
 
     char showMenu();
 
