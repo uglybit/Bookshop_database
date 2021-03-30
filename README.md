@@ -1,5 +1,6 @@
 # Bookshop_database is a small app that imitates Bookshop with mySQL database.
-  Functionality:
+ 
+ # Functionality:
     1. adding admins with special priviligies
     2. adding, deleting, managing books and customers
     3. customer registration
