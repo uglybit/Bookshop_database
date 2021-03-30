@@ -265,7 +265,7 @@ void Bookshop::editRecord(Table* table) {
     std::stringstream query;
     query << "UPDATE " << table->getName() << " SET ";
 
-    int i = 1;
+    unsigned i = 1;
     for (; i < columnsSize -1; i++) {
         query << table->getColName(i) <<"='" << userInput[i -1] << "', ";
     }
@@ -402,7 +402,7 @@ unsigned Bookshop::showRecordById(Table* table) const {
 }
 
 void Bookshop::addColumsToQuery(Table* table, std::stringstream& query) const {
-    int i = 1;
+    unsigned i = 1;
     for (; i < table->getColsSize() -1; i++) {
         query << table->getColName(i) << ", ";
     }
