@@ -8,7 +8,6 @@ Bookshop::Bookshop(DBConnection& dbc) : dbconnection(dbc), registry(dbc) {
     customers = new Customers{"customers", {"Customer_ID", "Name", "Surname", "Email"}};
     orders = new Orders{"orders", {"Order_ID", "Customer_ID", "Book_ID", "Date", "Status"}};
     userLogged = loginOrSignIn();
-
 }
 
 Bookshop::~Bookshop() {
@@ -24,7 +23,6 @@ Bookshop::~Bookshop() {
         delete orders;
         orders = nullptr;
     }
-
 }
 
 bool Bookshop::loginOrSignIn() {

@@ -9,9 +9,8 @@
 #include "DBConnection.h"
 #include "Functor.h"
 
-/*  Bookshop has connection to database and access to books, customers and orders
-
-
+/*
+    Bookshop has connection to database and access to books, customers and orders
 */
 
 class Bookshop
