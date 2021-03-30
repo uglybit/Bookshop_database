@@ -76,7 +76,7 @@
 	"include\DBConnection.h"
 	"include\Bookshop.h"
 
-1617107465 c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\include\dbconnection.h
+1617112272 c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\include\dbconnection.h
 	<iostream>
 	<Windows.h>
 	<mysql.h>
@@ -94,7 +94,7 @@
 	"DBConnection.h"
 	"Functor.h"
 
-1617108068 c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\include\functor.h
+1617113008 c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\include\functor.h
 	<sstream>
 	<iostream>
 	"Table.h"
@@ -105,7 +105,7 @@
 	<initializer_list>
 	<algorithm>
 
-1617111550 c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\include\registry.h
+1617112272 c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\include\registry.h
 	<sstream>
 	<memory>
 	"DBConnection.h"
@@ -116,7 +116,7 @@
 	<string>
 	<stdint.h>
 
-1617109342 source:c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\src\bookshop.cpp
+1617112272 source:c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\src\bookshop.cpp
 	"..\include\Bookshop.h"
 	"..\include\DataValidation.h"
 
@@ -126,13 +126,13 @@
 1617108230 source:c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\src\datavalidation.cpp
 	"..\include\DataValidation.h"
 
-1617106335 source:c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\src\dbconnection.cpp
+1617112272 source:c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\src\dbconnection.cpp
 	"..\include\DBConnection.h"
 
 1617108161 source:c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\src\functor.cpp
 	"..\include\Functor.h"
 
-1617109758 source:c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\src\registry.cpp
+1617112272 source:c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\src\registry.cpp
 	"..\include\Registry.h"
 
 1616439236 source:c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\src\sha256.cpp

@@ -5,7 +5,7 @@
 #include <iostream>
 #include "Table.h"
 
-/*  Functor is made for taking input from user.
+/*  Class Functor:
     Constructor gets reference to query then overloaded 'operator()'
     take polimoprhic pointer to table, then:
         1. shows fields for user
