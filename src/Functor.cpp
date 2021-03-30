@@ -1,4 +1,4 @@
-#include "Functor.h"
+#include "..\include\Functor.h"
 
 void Functor::operator()(Table* table) {
     unsigned numOfColumns = table->getColsSize();
@@ -12,11 +12,11 @@ void Functor::operator()(Table* table) {
         std::cout << table->getColName(i) << ": "; // show column name
         std::string input;
         std::getline(std::cin, input);
-        userInput[i] = input; //
+        userInput[i] = input;
     }
     query << ") VALUES (";
 
-    for(int i = 1; i < numOfColumns -1; i++) { // i = 1: column id is autoincremented
+    for(int i = 1; i < numOfColumns -1; i++) { // i = 1: because id is autoincremented
         query << "'" << userInput[i].c_str() << "', "; // adding users input
     }
     query << "'" << userInput[numOfColumns -1].c_str() << "')"; // last field - end query

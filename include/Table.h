@@ -1,8 +1,10 @@
 #ifndef TABLE_H
 #define TABLE_H
+
 #include <iostream>
 #include <vector>
 #include <initializer_list>
+#include <algorithm>
 
 
 enum class TableType {
@@ -29,6 +31,10 @@ public:
     virtual const TableType type() = 0;
 };
 
+/*  All database tables will inherit form abstract class Table
+    Each class derived from Table is defined in the same header because
+    the classes are short and overrides only one virtual function
+*/
 
 class Books : public Table {
 public:

@@ -1,13 +1,12 @@
 #include "..\include\Registry.h"
-//#include "Registry.h"
-//#include "sha256.h"
 
 Registry::Registry(DBConnection& dbc) : dbconnection(dbc) { }
 
 Registry::~Registry() { }
 
 
-// for existing customer
+// for existing user
+
 unsigned  Registry::checkLoginAndPassword(const std::string& login, const std::string& password) const {
     std::stringstream query;
     unsigned customerId{};
@@ -20,7 +19,7 @@ unsigned  Registry::checkLoginAndPassword(const std::string& login, const std::s
              }
     };
 
-    // check if login exist and take customer id
+    // if login exist save customer id
     query << "SELECT access.customer_id, access.login FROM access WHERE login='" << login << "'";
     if (!dbconnection.fetchRowsWithLambda(query.str().c_str(), lambda)) {
         return 0;

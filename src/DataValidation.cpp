@@ -1,4 +1,4 @@
-#include "DataValidation.h"
+#include "..\include\DataValidation.h"
 
 void checkInput(char& character, const char& first, const char& last, const char* text) {
     std::cout << text;
@@ -11,10 +11,6 @@ void checkInput(char& character, const char& first, const char& last, const char
     system("cls");
 }
 
-void checkInput(const std::string& str, const char* text) {
-
-}
-
 void checkInput(unsigned& number, int first, int last, const std::string& text) {
     int input = -1;
 
@@ -24,7 +20,7 @@ void checkInput(unsigned& number, int first, int last, const std::string& text) 
         std::cin >> input;
         std::cin.clear();
         std::cin.ignore(100, '\n');
-        
+
     }
     number = input;
 }

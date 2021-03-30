@@ -1,8 +1,8 @@
 #ifndef DBCONNECTION_H
 #define DBCONNECTION_H
+
 #include <iostream>
 #include <Windows.h>
-//#include "C:/Program Files (x86)/Dev-Cpp\MinGW64/x86_64-w64-mingw32/include/mysql.h"
 #include <mysql.h>
 #include <sqltypes.h>
 #include <sqlext.h>
@@ -29,12 +29,17 @@ public:
                           const std::string& passwd, const std::string& name);
     ~DBConnection();
 
+    // sends query without storing result, reutrns true when succeed, otherwise returns false
     bool sendQuery(const char* query);
+    // checks if query result is ok, reutrns true when succeed, otherwise returns false
     bool sendQueryStoreResult(const char* query);
-    bool fetchRowsWithLambda(const char* query, const std::function<void(MYSQL_ROW)> lambda); // ! const;
-    bool updateRecord(const char* query);
+    // shows result of query in the way defined in the second argument
+    bool fetchRowsWithLambda(const char* query, const std::function<void(MYSQL_ROW)> lambda);
+    // returns number of columns for the query
     unsigned long long getNumOfColumns(const char* query);
+    // returns one field from record
     std::shared_ptr<std::string>  getOneField(const char* query);
+    // preventing sql injection
     const std::shared_ptr<std::string>  validateStringInput(const char* name = "") const;
 };
 

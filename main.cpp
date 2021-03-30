@@ -1,9 +1,6 @@
 #include <iostream>
-//#include "DBConnection.h"
-//#include "Bookshop.h"
-#include "..\include\DBConnection.h"
-#include "..\include\Bookshop.h"
-
+#include "include\DBConnection.h"
+#include "include\Bookshop.h"
 
 int main()
 {

@@ -1,0 +1,143 @@
+# depslib dependency file v1.0
+1616666957 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\main.cpp
+	<iostream>
+	"..\include\DBConnection.h"
+	"..\include\Bookshop.h"
+
+1616703704 c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\include\dbconnection.h
+	<iostream>
+	<Windows.h>
+	<mysql.h>
+	<sqltypes.h>
+	<sqlext.h>
+	<functional>
+	<memory>
+
+1616703174 c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\include\bookshop.h
+	"DBConnection.h"
+	"Functor.h"
+	<sstream>
+	<iomanip>
+	<memory>
+	"Registry.h"
+	"Table.h"
+
+1616689682 c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\include\functor.h
+	<sstream>
+	<iostream>
+	"Table.h"
+
+1616702563 c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\include\table.h
+	<iostream>
+	<vector>
+	<initializer_list>
+	<algorithm>
+
+1616692789 c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\include\registry.h
+	"DBConnection.h"
+	"Table.h"
+	<sstream>
+	"sha256.h"
+	<memory>
+
+1425070462 c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\include\sha256.h
+	<string>
+	<stdint.h>
+
+1617105529 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\src\bookshop.cpp
+	"..\include\DBConnection.h"
+	"..\include\Bookshop.h"
+	"..\include\DataValidation.h"
+
+1616450573 c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\include\datavalidation.h
+	<iostream>
+
+1616698796 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\src\datavalidation.cpp
+	"DataValidation.h"
+
+1616702584 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\src\dbconnection.cpp
+	"..\include\DBConnection.h"
+
+1616689682 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\src\functor.cpp
+	"Functor.h"
+
+1616697538 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\src\registry.cpp
+	"..\include\Registry.h"
+
+1616439236 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\src\sha256.cpp
+	"sha256.h"
+
+1616702249 source:c:\users\seba_s\desktop\programowanie\c++\mysql\odcinek_2_ksiegarnia\src\table.cpp
+	"Table.h"
+	"..\include\Table.h"
+
+1617106669 source:c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\main.cpp
+	<iostream>
+	"include\DBConnection.h"
+	"include\Bookshop.h"
+
+1617107465 c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\include\dbconnection.h
+	<iostream>
+	<Windows.h>
+	<mysql.h>
+	<sqltypes.h>
+	<sqlext.h>
+	<functional>
+	<memory>
+
+1617109758 c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\include\bookshop.h
+	<sstream>
+	<iomanip>
+	<memory>
+	"Registry.h"
+	"Table.h"
+	"DBConnection.h"
+	"Functor.h"
+
+1617108068 c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\include\functor.h
+	<sstream>
+	<iostream>
+	"Table.h"
+
+1617109533 c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\include\table.h
+	<iostream>
+	<vector>
+	<initializer_list>
+	<algorithm>
+
+1617111550 c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\include\registry.h
+	<sstream>
+	<memory>
+	"DBConnection.h"
+	"Table.h"
+	"sha256.h"
+
+1425070462 c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\include\sha256.h
+	<string>
+	<stdint.h>
+
+1617109342 source:c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\src\bookshop.cpp
+	"..\include\Bookshop.h"
+	"..\include\DataValidation.h"
+
+1617108266 c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\include\datavalidation.h
+	<iostream>
+
+1617108230 source:c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\src\datavalidation.cpp
+	"..\include\DataValidation.h"
+
+1617106335 source:c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\src\dbconnection.cpp
+	"..\include\DBConnection.h"
+
+1617108161 source:c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\src\functor.cpp
+	"..\include\Functor.h"
+
+1617109758 source:c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\src\registry.cpp
+	"..\include\Registry.h"
+
+1616439236 source:c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\src\sha256.cpp
+	"sha256.h"
+
+1617106643 source:c:\users\seba_s\desktop\programowanie\c++\mysql\bookshop\src\table.cpp
+	"..\include\Table.h"
+

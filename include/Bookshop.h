@@ -1,12 +1,18 @@
 #ifndef LIBRARY_H
 #define LIBRARY_H
-#include "DBConnection.h"
-#include "Functor.h"
+
 #include <sstream>
 #include <iomanip>
 #include <memory>
 #include "Registry.h"
 #include "Table.h"
+#include "DBConnection.h"
+#include "Functor.h"
+
+/*  Bookshop has connection to database and access to books, customers and orders
+
+
+*/
 
 class Bookshop
 {
@@ -47,7 +53,7 @@ private:
     bool loginOrSignIn();
     bool login();
     void welcomeUser(unsigned id) const;
-    void customerMenu();
+    void manageCustomer();
     void showCustomerMenu() const;
     char customerMenuChoice();
     void findBook(std::stringstream& query) const;

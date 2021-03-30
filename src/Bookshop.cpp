@@ -1,5 +1,3 @@
-//#include "Bookshop.h"
-#include "..\include\DBConnection.h"
 #include "..\include\Bookshop.h"
 #include "..\include\DataValidation.h"
 
@@ -41,10 +39,9 @@ bool Bookshop::loginOrSignIn() {
 }
 
 bool Bookshop::login() {
-    std::string login /*{"schopenhauer"}; {"mithrandir"};*/ {"ibish"};
-    std::string password /*{"Qwerty!1"}; {"Mnbvcx!1"}; */ {"Zxcvbn!1"};
-    //login = *dbconnection.validateStringInput("Login");
-    //password = *dbconnection.validateStringInput("Password");
+    std::string login {"schopenhauer"};/* {"mithrandir"}; {"ibish"};*/
+    std::string password {"Qwerty!1"}; /*{"Mnbvcx!1"};  {"Zxcvbn!1"};*/
+    login = *dbconnection.validateStringInput("Login");
 
     customerID = registry.checkLoginAndPassword(login, password);
     if (customerID == 0) {
@@ -87,7 +84,8 @@ bool Bookshop::saveNewUserToRegistry(const std::string& login, const std::string
 }
 
 void Bookshop::welcomeUser(unsigned id) const {
-    std::cout << "Logged as: " << *registry.getLogin((id)) << ", ";
+    system("cls");
+    std::cout << "Logged as: " << *registry.getLogin(id) << ", ";
     if (admin) {
         std::cout << "Administrator\n\n";
     }
@@ -129,7 +127,7 @@ char Bookshop::adminMenuChoice() {
     {
         case 1: bookMenu();
             break;
-        case 2: customerMenu();
+        case 2: manageCustomer();
             break;
         case 3: orderMenu();
             break;
@@ -182,6 +180,26 @@ char Bookshop::customerMenuChoice(){
     return 'a';
 }
 
+
+void Bookshop::manageCustomer() {
+    showTable(customers);
+    std::cout << "1. Show customer's books\n";
+    std::cout << "2. Edit customer's data\n";
+    std::cout << "3. Remove customer\n";
+    std::cout << "0. Main menu\n";
+
+    unsigned choice{};
+    checkInput(choice, 0, 3);
+    system("cls");
+    switch(choice)
+    {
+        case 1: showCustomerBooks(); break;
+        case 2: editRecord(customers); break;
+        case 3: removeRecord(customers); break;
+        case 0: return;
+    }
+ }
+
 void Bookshop::orderBook() {
     showTable(books);
     std::cout << "Choose book id to order: ";
@@ -206,25 +224,6 @@ void Bookshop::showTable(Table* table) const {
     sendQueryShowResult(query);
 }
 
-void Bookshop::customerMenu() {
-    showTable(customers);
-    std::cout << "1. Show customer's books\n";
-    std::cout << "2. Edit customer's data\n";
-    std::cout << "3. Remove customer\n";
-    std::cout << "0. Main menu\n";
-
-    unsigned choice{};
-    checkInput(choice, 0, 3);
-    system("cls");
-    switch(choice)
-    {
-        case 1: showCustomerBooks(); break;
-        case 2: editRecord(customers); break;
-        case 3: removeRecord(customers); break;
-        case 0: return;
-    }
- }
-
 void Bookshop::bookMenu(){
     showTable(books);
     std::cout << "1. Edit book\n";
@@ -236,7 +235,7 @@ void Bookshop::bookMenu(){
     system("cls");
     switch(choice)
     {
-        case 1: editRecord(books); break; 
+        case 1: editRecord(books); break;
         case 2: removeRecord(books); break;
         case 0: return;
     }
@@ -579,11 +578,11 @@ void Bookshop::showBestSellingBooks() const {
              " GROUP BY books.Title"
              " ORDER BY Sold DESC"
              " LIMIT 3";
-
     sendQueryShowResult(query);
 }
 
 void Bookshop::showIncomes() const {
+    system("cls");
     std::stringstream query;
     query << "SELECT ROUND(SUM(books.Price),2) AS Incomes"
              " FROM books, orders"

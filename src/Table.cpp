@@ -1,14 +1,10 @@
-#include "Table.h"
 #include "..\include\Table.h"
 
 Table::Table(const std::string& name, const std::initializer_list<const char*> columns) : name{name}, COLUMNS_SIZE{columns.size()} {
     std::copy(columns.begin(), columns.end(), std::back_inserter(columnNames));
 }
 
-Table::~Table()
-{
-    //dtor
-}
+Table::~Table() {}
 
 const std::string& Table::getName() const {
     return name;
@@ -27,6 +23,6 @@ const std::string Table::getColName(unsigned number) const {
         return columnNames.at(number);
     }
     catch(std::out_of_range) {
-        std::cout << "Column out of range of the table!";
+        std::cout << "Column number out of range of the table!";
     }
 }

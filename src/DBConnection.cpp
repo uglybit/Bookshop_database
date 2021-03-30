@@ -1,4 +1,3 @@
-//#include "DBConnection.h"
 #include "..\include\DBConnection.h"
 
 DBConnection::DBConnection(const std::string& host, const std::string& user,
